@@ -1,0 +1,20 @@
+#!/bin/bash
+DIR="$1"
+shift
+COMMAND="$@"
+TEMP_DIR="/tmp/ro.$RANDOM"
+[[ -z "$COMMAND" ]] && COMMAND="/bin/bash -l"
+
+
+[[   -z "$DIR" ]] && echo 'Error: ¿Qué directorio?'       && exit 1
+[[ ! -d "$DIR" ]] && echo "Error: $DIR no existe"         && exit 2
+[[ ! -r "$DIR" ]] && echo "Error: No puedo leer $DIR"     && exit 3
+
+unshare -m -r  /bin/bash -c "
+     mkdir \"$TEMP_DIR\"
+     mount -o bind        \"$DIR\"      \"$TEMP_DIR\"
+     mount -o bind        \"$TEMP_DIR\" \"$DIR\" 
+     mount -o remount,ro,bind  \"$DIR\" 
+     umount \"$TEMP_DIR\"
+     rmdir  \"$TEMP_DIR\"
+     $COMMAND "
