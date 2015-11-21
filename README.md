@@ -1,7 +1,7 @@
 # scripts
 Misc. scripts and utilities I use daily
 
-## ro
+### ro
 ro runs something (defaults to /bin/bash) with a given directory as read-only.
 
 Suppose you have some precious documents in the "Documents" folder.
