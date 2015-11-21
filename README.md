@@ -18,3 +18,4 @@ Running:
 will run "indexer", but "indexer" won't be able to write anything in the "Documents"
 folder.
 
+(In 20 lines of code :) )
